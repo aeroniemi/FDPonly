@@ -1,0 +1,18 @@
+<table class="table">
+  <tr>
+    <th>runway</th>
+    <th>heading</th>
+    <th>length</th>
+    <th>type</th>
+  </tr>
+	 {{#each runways}}
+	{{#each this.end}}
+  <tr>
+    <td>{{this.name}}</td>
+    <td>{{this.heading}}</td>
+    <td>{{this.length}}</td>
+    <td>{{this.type}}</td>
+  </tr>
+	{{/each}}
+    {{/each}}
+</table>
