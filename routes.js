@@ -46,15 +46,16 @@ module.exports = function (app, config) {
 
 
     };
+    if (config.website.https == true) {
+        var rootaddressMerge = "https://" + config.website.rootAddress
+    } else {
+        var rootaddressMerge = "http://" + config.website.rootAddress
+    }
 
     app.get('/:icao/atc', function (req, res) {
         var icao = req.params.icao.toUpperCase();
         //console.log(icao)
-        if (config.website.https == true) {
-            var rootaddressMerge = "https://" + config.website.rootAddress
-        } else {
-            var rootaddressMerge = "http://" + config.website.rootAddress
-        }
+
         var merged = {
             "airport": datas.airports[icao],
             "atc": true,
@@ -69,7 +70,7 @@ module.exports = function (app, config) {
         var merged = {
             "airport": datas.airports[icao],
             "atc": false,
-            "rootAddress": config.website.rootAddress
+            "rootAddress": rootaddressMerge
         }
         console.log(merged)
         res.render('airport', merged)
@@ -80,7 +81,7 @@ module.exports = function (app, config) {
         var merged = {
             "airport": datas.airports[icao],
             "atc": false,
-            "rootAddress": config.website.rootAddress
+            "rootAddress": rootaddressMerge
         }
         console.log(merged)
         res.render('airport', merged)

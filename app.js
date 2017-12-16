@@ -1,6 +1,11 @@
 var express = require('express');
 var exphbs = require('express-handlebars');
-var config = require('./config.js')
+var config = require('./config.js');
+/*var Datastore = require('nedb');
+var db = new Datastore({
+    filename: 'airports.database',
+    autoload: true
+});*/
 var app = express();
 /*var runways = {
 			"runways": {
