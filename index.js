@@ -6,14 +6,14 @@ var db = new Datastore({
     autoload: true
 });
 var datas = {
-    EGKK: {
+    airport: {
+        icao: "EGLL",
         type: "commerical",
-        ele: "154",
-        variation: "3.05",
-        icao: "EGKK",
-        iata: "LGW",
+        ele: "124",
+        variation: "7.05",
+        iata: "LHR",
         city: "London",
-        name: "Gatwick Airport",
+        name: "Heathrow Airport",
         lat: "0",
         lon: "0",
         runways: {
@@ -54,6 +54,7 @@ db.insert(datas, function (err, newDoc) { // Callback is optional
     // newDoc is the newly inserted document, including its _id
     // newDoc has no key called notToBeSaved since its value was undefined
 });
+/*
 var rl = readline.createInterface({
     input: process.stdin,
     output: process.stdout
@@ -76,4 +77,4 @@ rl.question("Airport ICAO: ", function (icao) {
             });
         });
     });
-});
+});*/
