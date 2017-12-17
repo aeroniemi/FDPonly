@@ -1,4 +1,4 @@
-module.exports = function (app, config) {
+module.exports = function (app, config, db) {
     var datas = {
         "airports": {
             "EGKK": {
@@ -75,9 +75,11 @@ module.exports = function (app, config) {
         console.log(merged)
         res.render('airport', merged)
     });
+
     app.get('/:icao', function (req, res) {
         var icao = req.params.icao.toUpperCase();
         //console.log(icao)
+        /*
         var merged = {
             "airport": datas.airports[icao],
             "atc": false,
@@ -85,6 +87,27 @@ module.exports = function (app, config) {
         }
         console.log(merged)
         res.render('airport', merged)
+*/
+        db.find(icao, function (err, docs) {
+            console.log(docs)
+            if (docs != "[]") {
+                var merged = {
+                    "error": err,
+                    "atc": false,
+                    "rootAddress": rootaddressMerge
+                }
+            } else {
+                var merged = {
+                    "airport": docs[icao],
+                    "atc": false,
+                    "rootAddress": rootaddressMerge
+                }
+
+            }
+            console.log(merged);
+            res.render('airport', merged)
+        });
+
     });
 
     app.get('/', function (req, res) {
