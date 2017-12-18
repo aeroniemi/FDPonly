@@ -1,16 +1,22 @@
 {
-    "name": "docstest",
+    "name": "FDPonly",
     "version": "1.0.0",
-    "description": "",
-    "main": "index.js",
+    "description": "A (somewhat) structured documentation system",
+    "main": "app.js",
     "scripts": {
-        "test": "echo \"Error: no test specified\" && exit 1"
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "start": "node ./app.js"
     },
-    "author": "",
+    "author": "Niemi-tesseract",
     "license": "MIT",
     "dependencies": {
         "express": "^4.16.2",
         "express-handlebars": "^3.0.0",
         "nedb": "^1.8.0"
     }
+    "repository" :
+  { "type" : "git"
+  , "url" : "https://github.com/Niemi-tesseract/FDPonly.git"
+  }
+
 }
