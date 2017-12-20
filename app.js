@@ -2,6 +2,9 @@ var express = require('express');
 var exphbs = require('express-handlebars');
 var config = require('./config.js');
 var Datastore = require('nedb');
+var MetarFetcher = require('metar-taf').MetarFetcher;
+var TafFetcher = require('metar-taf').TafFetcher;
+var notamLoader = require('./notams.js');
 var db = new Datastore({
     filename: 'airports.database',
     autoload: true

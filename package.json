@@ -1,16 +1,18 @@
 {
-    "name": "docstest",
-    "version": "1.0.0",
-    "description": "",
-    "main": "index.js",
-    "scripts": {
-        "test": "echo \"Error: no test specified\" && exit 1"
-    },
-    "author": "",
-    "license": "MIT",
-    "dependencies": {
-        "express": "^4.16.2",
-        "express-handlebars": "^3.0.0",
-        "nedb": "^1.8.0"
-    }
+  "name": "docstest",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.16.2",
+    "express-handlebars": "^3.0.0",
+    "metar-taf": "0.0.2",
+    "nedb": "^1.8.0",
+    "notams": "^1.1.8"
+  }
 }
