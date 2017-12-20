@@ -61,15 +61,18 @@ module.exports = function (app, config, db) {
     // atc page compiler
     app.get('/:icao/atc', function (req, res) {
         var icao = req.params.icao.toUpperCase();
+        console.log(icao)
         var dbPrCall = new Promise(
             function (resolve, reject) {
                 db.findOne({
                     "airport.icao": icao
                 }, function (err, docs) {
                     //console.log(docs)
-                    if (docs != "[]") {
-                        resolve(docs);
+                    if (docs != null && Object.keys(docs.airport).length > 0) {
+                        resolve(docs.airport);
                     } else {
+                        console.log("database find error")
+                        console.log(docs.airport)
                         reject(err)
                     }
                     //console.log(merged);
@@ -100,19 +103,23 @@ module.exports = function (app, config, db) {
                 })
             }
         );
-        Promise.all(metarPrCall, tafPrCall, dbPrCall).then(values => {
-            var merged = {
-                "weather": {
-                    "metar": values[1],
-                    "taf": values[2]
-                },
-                "airport": values.airport,
-                "atc": true,
-                "rootAddress": rootaddressMerge
-            }
-            res.render('airport', merged)
-            console.log(merged)
-        });
+        Promise.all([metarPrCall, tafPrCall, dbPrCall])
+            .then(values => {
+                var merged = {
+                    "weather": {
+                        "metar": values[0],
+                        "taf": values[1]
+                    },
+                    "airport": values[2],
+                    "atc": true,
+                    "rootAddress": rootaddressMerge
+                }
+                res.render('airport', merged)
+                console.log(merged)
+            })
+            .catch(err => {
+                console.log("error: " + err)
+            })
     })
     // pilot page compiler
     app.get('/:icao/pilot', function (req, res) {
@@ -122,7 +129,7 @@ module.exports = function (app, config, db) {
             "airport.icao": icao
         }, function (err, docs) {
             //console.log(docs)
-            if (docs != "[]") {
+            if (docs != null && docs.length > 0) {
                 var merged = {
                     "airport": docs.airport,
                     "atc": false,
@@ -145,7 +152,7 @@ module.exports = function (app, config, db) {
             "airport.icao": icao
         }, function (err, docs) {
             //console.log(docs)
-            if (docs != "[]") {
+            if (docs != null && docs.length > 0) {
                 var merged = {
                     "airport": docs.airport,
                     "atc": false,
