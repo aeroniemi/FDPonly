@@ -1,6 +1,7 @@
 module.exports = function (app, config, db) {
     var MetarFetcher = require('metar-taf').MetarFetcher;
     var TafFetcher = require('metar-taf').TafFetcher;
+    var notamFetcher = require('notams');
     var metarFetcher = new MetarFetcher();
     var tafFetcher = new TafFetcher();
 
@@ -59,7 +60,7 @@ module.exports = function (app, config, db) {
     }
 
     // atc page compiler
-    app.get('/:icao/atc', function (req, res) {
+    app.get(['/:icao/pilot', '/:icao/atc', '/:icao'], function (req, res) {
         var icao = req.params.icao.toUpperCase();
         console.log(icao)
         var dbPrCall = new Promise(
@@ -72,7 +73,7 @@ module.exports = function (app, config, db) {
                         resolve(docs.airport);
                     } else {
                         console.log("database find error")
-                        console.log(docs.airport)
+                        //console.log(docs.airport)
                         reject(err)
                     }
                     //console.log(merged);
@@ -103,15 +104,38 @@ module.exports = function (app, config, db) {
                 })
             }
         );
-        Promise.all([metarPrCall, tafPrCall, dbPrCall])
+        var notamPrCall = new Promise(
+            function (resolve, reject) {
+                // if (icao.charAt(0) == 'K' || icao.charAt(0) == 'P') {
+                notamFetcher(icao).then(function (response) {
+                    //console.log(response[0].notams)
+                    resolve(response[0].notams);
+                }, function (error) {
+                    console.error(error);
+                    reject(error);
+                })
+            }
+        );
+        Promise.all([metarPrCall, tafPrCall, notamPrCall, dbPrCall])
             .then(values => {
+                var atc
+                console.log()
+                var pathAt = '/' + icao + "/atc"
+                if (req.route.path == pathAt) {
+                    atc = true
+                } else {
+                    atc = false
+                    console.log(atc)
+                }
                 var merged = {
                     "weather": {
                         "metar": values[0],
-                        "taf": values[1]
+                        "taf": values[1],
+                        "notams": values[2]
                     },
-                    "airport": values[2],
-                    "atc": true,
+                    "airport": values[3],
+                    "atc": atc,
+                    "beginner": true,
                     "rootAddress": rootaddressMerge
                 }
                 res.render('airport', merged)
@@ -121,6 +145,7 @@ module.exports = function (app, config, db) {
                 console.log("error: " + err)
             })
     })
+    /*
     // pilot page compiler
     app.get('/:icao/pilot', function (req, res) {
         var icao = req.params.icao.toUpperCase();
@@ -168,7 +193,7 @@ module.exports = function (app, config, db) {
             res.render('airport', merged)
         });
     });
-
+*/
     app.get('/', function (req, res) {
         res.render('home');
     });
