@@ -194,6 +194,47 @@ module.exports = function (app, config, db) {
         });
     });
 */
+    app.get('/:icao/entry', function (req, res) {
+        var icao = req.params.icao.toUpperCase();
+        var DbCall = new Promise(
+            function (resolve, reject) {
+                db.findOne({
+                    "airport.icao": icao
+                }, function (err, docs) {
+                    //console.log(docs)
+                    if (docs != null && Object.keys(docs.airport).length > 0) {
+                        resolve(docs.airport);
+                    } else {
+                        console.log("database find error")
+                        //console.log(docs.airport)
+                        reject(err)
+                    }
+                    //console.log(merged);
+
+                }
+                )
+            }
+        )
+        DbCall.then(values => {
+            console.log('already exists');
+            res.render('form', {
+                "icao": icao,
+                "readonly": true,
+            });
+        });
+        DbCall.catch(err => {
+            if (err == null) {
+                res.render('form', {
+                    "icao": icao
+                });
+            }
+        }
+        )
+    });
+
+
+
+
     app.get('/', function (req, res) {
         res.render('home');
     });

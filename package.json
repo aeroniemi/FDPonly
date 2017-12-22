@@ -11,6 +11,7 @@
   "dependencies": {
     "express": "^4.16.2",
     "express-handlebars": "^3.0.0",
+    "express-validator": "^4.3.0",
     "metar-taf": "0.0.2",
     "nedb": "^1.8.0",
     "notams": "^1.1.8"

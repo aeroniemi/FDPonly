@@ -19,31 +19,31 @@ var datas = {
         runways: {
             "1": {
                 "end": [{
-                        "name": "08R",
-                        "heading": "085",
-                        "length": "2440m",
-                        "type": "ice"
-				},
-                    {
-                        "name": "26L",
-                        "heading": "265",
-                        "length": "2440m",
-                        "type": "ice"
-				}]
+                    "name": "08R",
+                    "heading": "085",
+                    "length": "2440m",
+                    "type": "ice"
+                },
+                {
+                    "name": "26L",
+                    "heading": "265",
+                    "length": "2440m",
+                    "type": "ice"
+                }]
             },
             "2": {
                 "end": [{
-                        "name": "08L",
-                        "heading": "085",
-                        "length": "2440m",
-                        "type": "ice"
-				},
-                    {
-                        "name": "26R",
-                        "heading": "265",
-                        "length": "2440m",
-                        "type": "ice"
-				}]
+                    "name": "08L",
+                    "heading": "085",
+                    "length": "2440m",
+                    "type": "ice"
+                },
+                {
+                    "name": "26R",
+                    "heading": "265",
+                    "length": "2440m",
+                    "type": "ice"
+                }]
             },
         }
     }
