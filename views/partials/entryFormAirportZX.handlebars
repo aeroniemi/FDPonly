@@ -1,0 +1,59 @@
+{{#if errors}}
+<ul>
+    {{#each errors}}
+    <li>{{this.msg}}</li>
+    {{/each}}
+
+</ul>
+{{/if}}
+<form method="post">
+    <div class="form-group">
+        <label for="icao">ICAO Code</label>
+        <input type="text" class="form-control" name="icao" value="{{icao}}">
+    </div>
+
+    <div class="form-group">
+        <label for="type">Airport type</label>
+        <select class="form-control" name="type" {{#if readonly}}readonly{{/if}}>
+            <option value="1">commercial</option>
+            <option value="2">heliport</option>
+            <option value="3">general aviation</option>
+            <option value="4">miltary</option>
+            <option value="5">seaplane</option>
+        </select>
+    </div>
+    <div class="form-group">
+        <label for="ele">Elevation</label>
+        <input type="text" class="form-control" name="ele" {{#if readonly}}readonly{{/if}}>
+    </div>
+    <div class="form-group">
+        <label for="variation">Variation</label>
+        <input type="text" class="form-control" name="variation" {{#if readonly}}readonly{{/if}}>
+    </div>
+    <div class="form-group">
+        <label for="iata">IATA code (if applicable</label>
+        <input type="text" class="form-control" name="iata" {{#if readonly}}readonly{{/if}}>
+    </div>
+    <div class="form-group">
+        <label for="faa">FAA code (if applicable)</label>
+        <input type="text" class="form-control" name="iata" {{#if readonly}}readonly{{/if}}>
+    </div>
+    <div class="form-group">
+        <label for="city">City</label>
+        <input type="text" class="form-control" name="city" {{#if readonly}}readonly{{/if}}>
+    </div>
+    <div class="form-group">
+        <label for="name">Name</label>
+        <input type="text" class="form-control" name="name" {{#if readonly}}readonly{{/if}}>
+    </div>
+    <div class="form-group">
+        <label for="lat">Centrepoint latitude</label>
+        <input type="text" class="form-control" name="lat" {{#if readonly}}readonly{{/if}}>
+    </div>
+    <div class="form-group">
+        <label for="lon">Centrepoint longitude</label>
+        <input type="text" class="form-control" name="lon" {{#if readonly}}readonly{{/if}}>
+    </div>
+
+    <button class="btn btn-primary" type="submit">Submit form</button>
+</form>

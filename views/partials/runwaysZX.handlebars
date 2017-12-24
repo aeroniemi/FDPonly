@@ -1,0 +1,23 @@
+<h3>Runways</h3>
+<table class="table" class="display" id="example">
+    <tr>
+        <th>runway</th>
+        <th>heading</th>
+        <th>length</th>
+        <th>type</th>
+    </tr>
+    {{#each airport_runways}}
+    <tr>
+        <td>{{this.name1}}</td>
+        <td>{{this.heading1}}</td>
+        <td>{{this.length}}</td>
+        <td>{{this.type}}</td>
+    </tr>
+    <tr>
+        <td>{{this.name2}}</td>
+        <td>{{this.heading2}}</td>
+        <td>{{this.length}}</td>
+        <td>{{this.type}}</td>
+    </tr>
+    {{/each}}
+</table>

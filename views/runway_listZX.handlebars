@@ -1,0 +1,15 @@
+<h3>List of runways</h3>
+<table class="table" class="display" id="example">
+    <tr>
+        <th>icao</th>
+        <th>nameEast</th>
+        <th>nameWest</th>
+    </tr>
+    {{#each runway_list}}
+    <tr>
+        <td>{{this.icao}}</td>
+        <td>{{this.name1}}</td>
+        <td>{{this.name2}}</td>
+    </tr>
+    {{/each}}
+</table>
