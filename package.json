@@ -18,8 +18,9 @@
     "express-validator": "^4.3.0",
     "metar-taf": "0.0.2",
     "mongoose": "^4.13.7",
-    "nedb": "^1.8.0",
+
     "notams": "^1.1.8"
+
   },
   "devDependencies": {
     "nodemon": "^1.14.3"
