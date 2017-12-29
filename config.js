@@ -1,6 +1,6 @@
 module.exports = {
     database: "airportsZMS",
-    dev: true,
+    dev: false,
     website: {
         rootAddress: "localhost",
         port: 80,

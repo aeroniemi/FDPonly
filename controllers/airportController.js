@@ -47,14 +47,15 @@ exports.airport_detail = function (req, res, next) {
 
     }, function (err, results) {
         if (err) { return next(err); }
-        if (results.airportMS == null) { // No results.
+        if (results.airportMS[0] == null) { // No results.
             var err = new Error('Airport not found');
             err.status = 404;
             return next(err);
+        } else {
+            //console.log(results)
+            // Successful, so render
+            res.render('airport_detailZX', { airport: results.airportMS[0], airport_runways: results.airport_runways });
         }
-        console.log(results)
-        // Successful, so render
-        res.render('airport_detailZX', { airport: results.airportMS[0], airport_runways: results.airport_runways });
     });
 
 };

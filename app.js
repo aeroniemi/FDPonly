@@ -2,20 +2,15 @@ var express = require('express');
 var exphbs = require('express-handlebars');
 var config = require('./config.js');
 var localConfig = require('./localConfig.js');
-var Datastore = require('nedb');
 var bodyParser = require('body-parser');
 var path = require('path');
-//var airports = require('./routes/airportRoutes.js')//(app, config, db);
-module.exports = app;
+var fs = require('fs')
+var morgan = require('morgan')
 var notamLoader = require('./notams.js');
 var index = require('./routes/indexRoutes');
 var catalog = require('./routes/catalogRoutes');
-
-var db = new Datastore({
-	filename: 'airports.database',
-	autoload: true
-});
 var app = express();
+module.exports = app;
 //Set up mongoose connection
 var mongoose = require('mongoose');
 var mongoDB = localConfig.dbUrl;
@@ -26,6 +21,9 @@ mongoose.Promise = global.Promise;
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 
+
+var accessLogStream = fs.createWriteStream(path.join(__dirname, 'access.log'), { flags: 'a' })
+app.use(morgan('combined', { stream: accessLogStream }))
 
 
 
@@ -51,17 +49,16 @@ app.use(function (req, res, next) {
 	err.status = 404;
 	next(err);
 });
-if (config.dev == false) {
-	app.use(function (err, req, res, next) {
-		// set locals, only providing error in development
-		res.locals.message = err.message;
-		res.locals.error = req.app.get('env') === 'development' ? err : {};
+app.use(function (err, req, res, next) {
+	// set locals, only providing error in development
+	res.locals.message = err.message;
+	res.locals.error = req.app.get('env') === 'development' ? err : {};
 
-		// render the error page
-		res.status(err.status || 500);
-		res.render('error');
-	});
-}
+	// render the error page
+	res.status(err.status || 500);
+	res.render('error');
+});
+
 
 //require("./routes.js")(app, config, db);
 

@@ -18,6 +18,7 @@
     "express-validator": "^4.3.0",
     "metar-taf": "0.0.2",
     "mongoose": "^4.13.7",
+    "morgan": "^1.9.0",
     "nedb": "^1.8.0",
     "notams": "^1.1.8"
   },
