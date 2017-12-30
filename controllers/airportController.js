@@ -68,26 +68,21 @@ exports.airport_create_get = function (req, res, next) {
 
 // Handle airport create on POST
 exports.airport_create_post = [
-    body('icao').isLength({ min: 4, max: 4 }).trim().withMessage('ICAO code must be specified.')
-        .isAlpha().withMessage('ICAO code has non-alpha characters.'),
+    body("icao", "Check your ICAO code").trim().matches(/^[A-Z]{4}$/i),
     body('type').isLength({ min: 1, max: 1 }).trim().withMessage('Airport type must be specified.')
         .isNumeric().withMessage('Incorrect code'),
-    body('name').isLength({ min: 2, max: 100 }).trim().withMessage('Check your length'),
-    body('lat').isLength({ min: 1, max: 12 }).trim().withMessage('Woah, we only need max 10 decimal places!')
-        .isNumeric().withMessage('Ensure decimal degree is used'),
-    body('lon').isLength({ min: 1, max: 12 }).trim().withMessage('Woah, we only need max 10 decimal places!')
-        .isNumeric().withMessage('Ensure decimal degree is used'),
-    body('iata').isLength({ max: 3 }).trim().withMessage('IATA code are only 3 letters long.'),
-    //.isAlpha().withMessage('IATA code has non-alpha characters.'),
-    body('faa').isLength({ max: 3 }).trim().withMessage('FAA codes are only 3 letters long.'),
-    //.isAlpha().withMessage('FAA code has non-alpha characters.'),
+    body('name').isLength({ min: 2, max: 100 }).trim().withMessage('Check your name'),
+    body("lat", "Check your latitude").trim().matches(/^[-+]?([1-8]?\d(\.\d+)?|90(\.0+)?)/),
+    body("lon", "Check your longitude").trim().matches(/^[-+]?([1-8]?\d(\.\d+)?|90(\.0+)?)/),
+    body("faa", "Check your FAA code").optional().trim().matches(/^[A-Z0-9]{3}$/i),
+    body("iataLe", "Check your IATA code").optional().trim().matches(/^[A-Z0-9]{3}$/i),
     body('ele').isLength({ min: 1, max: 6 }).trim().withMessage('That airport is at a strange elevation! check units are feet (ft)')
         .isNumeric().withMessage('Remember not to include any units'),
     sanitizeBody('icao').trim().escape(),
     sanitizeBody('type').trim().escape(),
     sanitizeBody('ele').trim().escape(),
     sanitizeBody('variation').trim().escape(),
-    sanitizeBody('iata').trim().escape(),
+    sanitizeBody('iataLe').trim().escape(),
     sanitizeBody('faa').trim().escape(),
     sanitizeBody('city').trim().escape(),
     sanitizeBody('name').trim().escape(),
@@ -98,14 +93,15 @@ exports.airport_create_post = [
         //console.log(req.body);
         // Extract the validation errors from a request.
         const errors = validationResult(req);
-        var icaoMX = req.body.icao.toUpperCase();
+        //var icaoMX = req.body.icao.toUpperCase();
         // Create a genre object with escaped and trimmed data.
         var airport = new Airport({
-            icao: icaoMX,
+            icao: req.body.icao.toUpperCase(),
             type: req.body.type,
             ele: req.body.ele,
             variation: req.body.variation,
-            faa: req.body.faa,
+            iata: req.body.iataLe.toUpperCase(),
+            faa: req.body.faa.toUpperCase(),
             city: req.body.city,
             name: req.body.name,
             lat: req.body.lat,

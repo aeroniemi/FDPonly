@@ -41,14 +41,10 @@ exports.runway_create_post = [
         .isAlphanumeric().withMessage('Airport name has non-alpha characters.'),
     body('name2').isLength({ min: 2, max: 3 }).trim().withMessage('Runway name needs to be 1-3 chars long. ensure leading zero is included')
         .isAlphanumeric().withMessage('Airport name has non-alpha characters.'),
-    body('lat').isLength({ min: 1, max: 12 }).trim().withMessage('Woah, we only need max 10 decimal places!')
-        .isNumeric().withMessage('Ensure decimal degree is used'),
-    body('lon').isLength({ min: 1, max: 12 }).trim().withMessage('Woah, we only need max 10 decimal places!')
-        .isNumeric().withMessage('Ensure decimal degree is used'),
-    body('length').isLength({ min: 1, max: 5 }).trim().withMessage('Check your length is in meters')
-        .isNumeric().withMessage('Remember not to include any units'),
-    body('width').isLength({ min: 1, max: 3 }).trim().withMessage('seriously, the runway is not more than 990 metres wide!')
-        .isNumeric().withMessage('Remember not to include any units'),
+    body("lat", "Check your latitude").trim().matches(/^[-+]?([1-8]?\d(\.\d+)?|90(\.0+)?)/),
+    body("lon", "Check your longitude").trim().matches(/^[-+]?([1-8]?\d(\.\d+)?|90(\.0+)?)/),
+    body("length", "Check your length").trim().matches(/^([1-9][0-9]{0,4})$/),
+    body("width", "Check your runway width is in metres").trim().matches(/^([1-9][0-9]{0,1})$/),
     sanitizeBody('icao').trim().escape(),
     sanitizeBody('type').trim().escape(),
     sanitizeBody('heading1').trim().escape(),
