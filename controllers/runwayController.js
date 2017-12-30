@@ -29,8 +29,7 @@ exports.runway_create_get = function (req, res, next) {
 // Handle runway create on POST
 exports.runway_create_post = [
 
-    body('icao').isLength({ min: 4, max: 4 }).trim().withMessage('ICAO code must be specified.')
-        .isAlpha().withMessage('ICAO code has non-alpha characters.'),
+    body("icao", "Check your ICAO code").trim().matches(/^[A-Z]{4}$/i),
     body('type').isLength({ min: 1, max: 1 }).trim().withMessage('Airport type must be specified.')
         .isNumeric().withMessage('Incorrect code'),
     body('heading1').isLength({ min: 3, max: 3 }).trim().withMessage('Leading zeros are required')
