@@ -20,7 +20,8 @@
     "mongoose": "^4.13.7",
     "morgan": "^1.9.0",
     "nedb": "^1.8.0",
-    "notams": "^1.1.8"
+    "notams": "^1.1.8",
+    "terminal-procedures": "^0.3.9"
   },
   "devDependencies": {
     "nodemon": "^1.14.3"

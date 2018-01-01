@@ -3,7 +3,13 @@ var Runway = require('../models/runwayAct');
 const { body, validationResult } = require('express-validator/check');
 const { sanitizeBody } = require('express-validator/filter');
 var async = require('async');
-
+var MetarFetcher = require('metar-taf').MetarFetcher;
+var TafFetcher = require('metar-taf').TafFetcher;
+var notamFetcher = require('notams');
+var metarFetcher = new MetarFetcher();
+var tafFetcher = new TafFetcher();
+var terminalProcedures = require('terminal-procedures')
+var config = require('../config');
 exports.index = function (req, res) {
 
     async.parallel({
@@ -18,7 +24,6 @@ exports.index = function (req, res) {
     });
 };
 // Display list of all airports
-// Display list of all Books
 exports.airport_list = function (req, res, next) {
 
     Airport.find({}, 'icao city name')
@@ -32,14 +37,60 @@ exports.airport_list = function (req, res, next) {
 };
 // Display detail page for a specific airport
 exports.airport_detail = function (req, res, next) {
+
+
+
+    var chartZone
     var icao = req.params.id.toUpperCase();
+    if (
+        icao.charAt(0) == 'K' ||
+        icao.charAt(0) == 'P' ||
+        icao.substring(0, 2) == 'TI' ||
+        icao.substring(0, 2) == 'TJ' ||
+        icao.substring(0, 2) == 'NS'
+    ) { chartZone = 'US' }
+
+
     async.parallel({
         airportMS: function (callback) {
-
             Airport.find({ 'icao': icao })
                 .exec(callback)
         },
+        metar: function (callback) {
+            metarFetcher.getData(icao).then(function (response) {
+                callback(null, response)
+            }, function (error) {
+                callback(error)
+            });
 
+        },
+        taf: function (callback) {
+            tafFetcher.getData(icao).then(function (response) {
+                callback(null, response)
+            }, function (error) {
+                callback(error)
+            });
+        },
+        notam: function (callback) {
+
+            notamFetcher(icao).then(function (response) {
+                callback(null, response[0].notams)
+            }, function (error) {
+                callback(error)
+            });
+        },
+        charts: function (callback) {
+            if (chartzone == "US") {
+                terminalProcedures.list("KMCO").then(function (response) {
+                    callback(null, response)
+                }, function (error) {
+                    callback(error)
+                });
+            }
+            else {
+                callback(null, "NotUS")
+            }
+        },
         airport_runways: function (callback) {
             Runway.find({ 'icao': icao })
                 .exec(callback);
@@ -52,9 +103,17 @@ exports.airport_detail = function (req, res, next) {
             err.status = 404;
             return next(err);
         } else {
-            //console.log(results)
+            console.log(results.charts)
+            console.log(config)
             // Successful, so render
-            res.render('airport_detailZX', { airport: results.airportMS[0], airport_runways: results.airport_runways });
+            res.render('airport_detailZX', {
+                airport: results.airportMS[0], airport_runways: results.airport_runways, weather: {
+                    metar: results.metar,
+                    taf: results.taf,
+                    notams: results.notam,
+                },
+                config: config
+            });
         }
     });
 

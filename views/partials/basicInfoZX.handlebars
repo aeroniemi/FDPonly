@@ -13,15 +13,19 @@
         <td>{{airport.variation}}</td>
     </tr>
     <tr>
-        <td>ICAO Code</td>
-        <td>{{airport.icao}}</td>
-        <td>IATA Code</td>
-        <td>{{airport.iata}}</td>
-    </tr>
-    <tr>
         <td>Latitude</td>
         <td>{{airport.lat}}</td>
         <td>Longitude</td>
         <td>{{airport.lon}}</td>
     </tr>
+    {{#if airport.faa}}
+    <tr>{{else if airport.iata}}
+        <tr>{{/if}} {{#if airport.faa}}
+            <td>FAA Code</td>
+            <td>{{airport.faa}}</td>
+            {{/if}} {{#if airport.iata}}
+            <td>IATA Code</td>
+            <td>{{airport.iata}}</td>
+            {{/if}} {{#if airport.faa}}
+        </tr>{{else if airport.iata}}</tr>{{/if}}
 </table>

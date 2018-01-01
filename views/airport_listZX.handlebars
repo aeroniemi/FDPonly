@@ -9,7 +9,9 @@
         </tr>
         {{#each airport_list}}
         <tr>
-            <td>{{this.icao}}</td>
+            <td>
+                <a href="/airports/{{this.icao}}">{{this.icao}}</a>
+            </td>
             <td>{{this.name}}</td>
             <td>{{this.city}}</td>
         </tr>
