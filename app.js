@@ -9,7 +9,9 @@ var morgan = require('morgan')
 var notamLoader = require('./notams.js');
 var index = require('./routes/indexRoutes');
 var catalog = require('./routes/catalogRoutes');
+var  minifyHTML  =  require('express-minify-html');
 var app = express();
+
 module.exports = app;
 //Set up mongoose connection
 var mongoose = require('mongoose');
@@ -21,7 +23,18 @@ mongoose.Promise = global.Promise;
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 
-
+app.use(minifyHTML({
+	override:       true,
+	exception_url:  false,
+	htmlMinifier:  {
+		removeComments:             true,
+		collapseWhitespace:         true,
+		collapseBooleanAttributes:  true,
+		removeAttributeQuotes:      true,
+		removeEmptyAttributes:      true,
+		minifyJS:                   true
+	}
+}));
 var accessLogStream = fs.createWriteStream(path.join(__dirname, 'access.log'), { flags: 'a' })
 app.use(morgan('combined', { stream: accessLogStream }))
 
