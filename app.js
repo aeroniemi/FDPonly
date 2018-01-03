@@ -10,6 +10,7 @@ var notamLoader = require('./notams.js');
 var index = require('./routes/indexRoutes');
 var catalog = require('./routes/catalogRoutes');
 var app = express();
+var expressGoogleAnalytics = require('express-google-analytics');
 module.exports = app;
 //Set up mongoose connection
 var mongoose = require('mongoose');
@@ -26,8 +27,9 @@ var accessLogStream = fs.createWriteStream(path.join(__dirname, 'access.log'), {
 app.use(morgan('combined', { stream: accessLogStream }))
 
 
+var analytics = expressGoogleAnalytics(process.env.EVGaCode);
 
-
+app.use(analytics);
 
 
 
@@ -44,7 +46,7 @@ app.use(express.static('./static')); // use static folder
 app.use('/', index);
 app.use('/airports', catalog);
 // catch 404 and forward to error handler
-/*
+
 app.use(function (req, res, next) {
 	var err = new Error('Not Found');
 	err.status = 404;
@@ -60,8 +62,6 @@ app.use(function (err, req, res, next) {
 	res.status(err.status || 500);
 	res.render('error');
 });
-*/
 
-//require("./routes.js")(app, config, db);
 
 app.listen(config.website.port);
