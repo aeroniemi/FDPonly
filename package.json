@@ -1,8 +1,8 @@
 {
-  "name": "docstest",
+  "name": "FDPonly",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "A (somewhat) structured documentation system",
+  "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "devstart": "nodemon ./app.js"
@@ -26,4 +26,9 @@
   "devDependencies": {
     "nodemon": "^1.14.3"
   }
+ "repository" :
+  { "type" : "git"
+  , "url" : "https://github.com/Niemi-tesseract/FDPonly.git"
+  }
+
 }
