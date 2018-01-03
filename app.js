@@ -10,7 +10,6 @@ var notamLoader = require('./notams.js');
 var index = require('./routes/indexRoutes');
 var catalog = require('./routes/catalogRoutes');
 var app = express();
-var expressGoogleAnalytics = require('express-google-analytics');
 module.exports = app;
 //Set up mongoose connection
 var mongoose = require('mongoose');
@@ -25,12 +24,6 @@ db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 
 var accessLogStream = fs.createWriteStream(path.join(__dirname, 'access.log'), { flags: 'a' })
 app.use(morgan('combined', { stream: accessLogStream }))
-
-
-var analytics = expressGoogleAnalytics(process.env.EVGaCode);
-
-app.use(analytics);
-
 
 
 

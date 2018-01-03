@@ -14,7 +14,6 @@
     "body-parser": "^1.18.2",
     "express": "^4.16.2",
     "express-formidable": "^1.0.0",
-    "express-google-analytics": "^1.0.2",
     "express-handlebars": "^3.0.0",
     "express-validator": "^4.3.0",
     "metar-taf": "0.0.2",
