@@ -80,7 +80,7 @@ exports.airport_detail = function (req, res, next) {
             });
         },
         charts: function (callback) {
-            if (chartzone == "US") {
+            if (chartZone == "US") {
                 terminalProcedures.list("KMCO").then(function (response) {
                     callback(null, response)
                 }, function (error) {

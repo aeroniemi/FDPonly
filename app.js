@@ -44,12 +44,13 @@ app.use(express.static('./static')); // use static folder
 app.use('/', index);
 app.use('/airports', catalog);
 // catch 404 and forward to error handler
+/*
 app.use(function (req, res, next) {
 	var err = new Error('Not Found');
 	err.status = 404;
 	next(err);
 });
-/*
+
 app.use(function (err, req, res, next) {
 	// set locals, only providing error in development
 	res.locals.message = err.message;
