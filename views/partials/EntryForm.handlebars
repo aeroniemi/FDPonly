@@ -1,0 +1,47 @@
+<form method="post">
+    <div class="form-group">
+        <label for="icaoInput">ICAO Code</label>
+        <input type="text" class="form-control" id="icaoInput" value="{{icao}}" readonly>
+    </div>
+
+    <div class="form-group">
+        <label for="typeInput">Airport type</label>
+        <select class="form-control" id="typeInput" {{#if readonly}}readonly{{/if}}>
+            <option>commercial</option>
+            <option>heliport</option>
+            <option>general aviation</option>
+            <option>miltary</option>
+            <option>seaplane</option>
+        </select>
+    </div>
+    <div class="form-group">
+        <label for="eleInput">Airport elevation (in ft)</label>
+        <input type="text" class="form-control" id="eleInput" {{#if readonly}}readonly{{/if}}>
+    </div>
+    <div class="form-group">
+        <label for="variationInput">Magnetic Variation</label>
+        <input type="text" class="form-control" id="variationInput" {{#if readonly}}readonly{{/if}}>
+    </div>
+    <div class="form-group">
+        <label for="iataInput">IATA Code (if applicable)</label>
+        <input type="text" class="form-control" id="iataInput" {{#if readonly}}readonly{{/if}}>
+    </div>
+    <div class="form-group">
+        <label for="cityInput">City</label>
+        <input type="text" class="form-control" id="cityInput" {{#if readonly}}readonly{{/if}}>
+    </div>
+    <div class="form-group">
+        <label for="nameInput">Airport Name</label>
+        <input type="text" class="form-control" id="nameInput" {{#if readonly}}readonly{{/if}}>
+    </div>
+    <div class="form-group">
+        <label for="latInput">Decimal latitude</label>
+        <input type="text" class="form-control" id="latInput" {{#if readonly}}readonly{{/if}}>
+    </div>
+    <div class="form-group">
+        <label for="lonInput">Decimal longitude</label>
+        <input type="text" class="form-control" id="lonInput" {{#if readonly}}readonly{{/if}}>
+    </div>
+
+    <button class="btn btn-primary" type="submit">Submit form</button>
+</form>

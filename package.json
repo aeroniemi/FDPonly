@@ -1,20 +1,32 @@
 {
-    "name": "FDPonly",
-    "version": "1.0.0",
-    "description": "A (somewhat) structured documentation system",
-    "main": "app.js",
-    "scripts": {
-        "test": "echo \"Error: no test specified\" && exit 1",
-        "start": "node ./app.js"
-    },
-    "author": "Niemi-tesseract",
-    "license": "MIT",
-    "dependencies": {
-        "express": "^4.16.2",
-        "express-handlebars": "^3.0.0",
-        "nedb": "^1.8.0"
-    }
-    "repository" :
+  "name": "FDPonly",
+  "version": "1.0.0",
+  "description": "A (somewhat) structured documentation system",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "devstart": "nodemon ./app.js"
+  },
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "async": "^2.6.0",
+    "body-parser": "^1.18.2",
+    "express": "^4.16.2",
+    "express-formidable": "^1.0.0",
+    "express-handlebars": "^3.0.0",
+    "express-validator": "^4.3.0",
+    "metar-taf": "0.0.2",
+    "mongoose": "^4.13.7",
+    "morgan": "^1.9.0",
+    "nedb": "^1.8.0",
+    "notams": "^1.1.8",
+    "terminal-procedures": "^0.3.9"
+  },
+  "devDependencies": {
+    "nodemon": "^1.14.3"
+  }
+ "repository" :
   { "type" : "git"
   , "url" : "https://github.com/Niemi-tesseract/FDPonly.git"
   }

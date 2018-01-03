@@ -1,0 +1,53 @@
+{{>navZX}} {{> introZX }}
+<div class="container">
+
+    <div id="accordion" role="tablist">
+        <div class="card">
+            <div class="card-header" role="tab" id="general">
+                <h5 class="mb-0">
+                    <a data-toggle="collapse" href="#generalCollapse" aria-expanded="true" aria-controls="generalCollapse">
+                        General information
+                    </a>
+                </h5>
+            </div>
+
+            <div id="generalCollapse" class="collapse show" role="tabpanel" aria-labelledby="general" data-parent="#accordion">
+                <div class="card-body">
+                    {{> basicInfoZX}} {{> runwaysZX }}
+                </div>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-header" role="tab" id="charts">
+                <h5 class="mb-0">
+                    <a class="collapsed" data-toggle="collapse" href="#chartsCollapse" aria-expanded="false" aria-controls="chartsCollapse">
+                        Charts
+                    </a>
+                </h5>
+            </div>
+            <div id="chartsCollapse" class="collapse" role="tabpanel" aria-labelledby="charts" data-parent="#accordion">
+                <div class="card-body">
+                    one will find the charts here when they are addedEFJKERGLKGND,AERLJGD,UERJNMDIFERM,ADSGJNKEVM,DFHUGJNREHDJKNMREJKLD ,VIJERKMLDFVHNJVERK,DGHNVJIPERL.DFHVINKMER,FDHUGJNKVERLFNDIKVLERILGJVERKLF
+                    UIGJK
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header" role="tab" id="ground">
+                <h5 class="mb-0">
+                    <a class="collapsed" data-toggle="collapse" href="#wxrCollapse" aria-expanded="false" aria-controls="wxrCollapse">
+                        Weather
+                    </a>
+                </h5>
+            </div>
+            <div id="wxrCollapse" class="collapse" role="tabpanel" aria-labelledby="general" data-parent="#accordion">
+                <div class="card-body">
+                    {{>weatherZX}}
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
