@@ -1,8 +1,10 @@
 var Airport = require('../models/airportAct');
 var Runway = require('../models/runwayAct');
+var Trainer = require('../models/atcoTrainerAct');
 const { body, validationResult } = require('express-validator/check');
 const { sanitizeBody } = require('express-validator/filter');
 var async = require('async');
+var markdown = require('markdown').markdown;
 var MetarFetcher = require('metar-taf').MetarFetcher;
 var TafFetcher = require('metar-taf').TafFetcher;
 var notamFetcher = require('notams');
@@ -33,13 +35,9 @@ exports.airport_list = function (req, res, next) {
             //Successful, so render
             res.render('airport_listZX', { airport_list: list_airports });
         });
-
 };
 // Display detail page for a specific airport
 exports.airport_detail = function (req, res, next) {
-
-
-
     var chartZone
     var icao = req.params.id.toUpperCase();
     if (
@@ -49,7 +47,6 @@ exports.airport_detail = function (req, res, next) {
         icao.substring(0, 2) == 'TJ' ||
         icao.substring(0, 2) == 'NS'
     ) { chartZone = 'US' }
-
 
     async.parallel({
         airportMS: function (callback) {
@@ -95,6 +92,10 @@ exports.airport_detail = function (req, res, next) {
             Runway.find({ 'icao': icao })
                 .exec(callback);
         },
+        Trainer: function (callback) {
+            Trainer.findOne({ 'icao': icao })
+                .exec(callback);
+        },
 
     }, function (err, results) {
         if (err) { return next(err); }
@@ -103,17 +104,50 @@ exports.airport_detail = function (req, res, next) {
             err.status = 404;
             return next(err);
         } else {
-            console.log(results.charts)
-            console.log(config)
-            // Successful, so render
-            res.render('airport_detailZX', {
-                airport: results.airportMS[0], airport_runways: results.airport_runways, weather: {
-                    metar: results.metar,
-                    taf: results.taf,
-                    notams: results.notam,
-                },
-                config: config
-            });
+            if (results.Trainer == null) { // No res
+                //console.log('We have trainers')
+                res.render('airport_detailZX', {
+                    airport: results.airportMS[0], airport_runways: results.airport_runways, weather: {
+                        metar: results.metar,
+                        taf: results.taf,
+                        notams: results.notam,
+                    },
+                    config: config
+                });
+
+            } else {
+                // console.log(results.charts)
+                //console.log(config)
+                console.log("so we're getting there")
+                // Successful, so render
+                res.render('airport_detailZX', {
+                    airport: results.airportMS[0],
+                    airport_runways: results.airport_runways,
+                    weather: {
+                        metar: results.metar,
+                        taf: results.taf,
+                        notams: results.notam,
+                    },
+                    trainer: {
+                        deicing: markdown.toHTML(results.Trainer.deicing),
+                        lowVis: markdown.toHTML(results.Trainer.lowVis),
+                        procedural: markdown.toHTML(results.Trainer.procedural),
+                        atis: markdown.toHTML(results.Trainer.atis),
+                        parking: markdown.toHTML(results.Trainer.parking),
+                        transponder: markdown.toHTML(results.Trainer.transponder),
+                        departure: markdown.toHTML(results.Trainer.departure),
+                        arrival: markdown.toHTML(results.Trainer.arrival),
+                        night: markdown.toHTML(results.Trainer.night),
+                        noise: markdown.toHTML(results.Trainer.noise),
+                        restrictions: markdown.toHTML(results.Trainer.restrictions),
+                        terminalAssignments: markdown.toHTML(results.Trainer.terminalAssignments),
+                        approaches: markdown.toHTML(results.Trainer.approaches),
+                        rwyPreferences: markdown.toHTML(results.Trainer.rwyPreferences),
+                    },
+
+                    config: config
+                });
+            }
         }
     });
 
