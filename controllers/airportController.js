@@ -119,6 +119,13 @@ exports.airport_detail = function (req, res, next) {
                 // console.log(results.charts)
                 //console.log(config)
                 console.log("so we're getting there")
+                
+                let trainerList = {};
+                Object.keys(results.Trainer).forEach((key) => {
+                    if (results.Trainer[key] != "false") {
+                    	trainerList[key] = markdown.toHTML(results.Trainer[key])
+					}
+                });
                 // Successful, so render
                 res.render('airport_detailZX', {
                     airport: results.airportMS[0],
@@ -128,22 +135,7 @@ exports.airport_detail = function (req, res, next) {
                         taf: results.taf,
                         notams: results.notam,
                     },
-                    trainer: {
-                        deicing: markdown.toHTML(results.Trainer.deicing),
-                        lowVis: markdown.toHTML(results.Trainer.lowVis),
-                        procedural: markdown.toHTML(results.Trainer.procedural),
-                        atis: markdown.toHTML(results.Trainer.atis),
-                        parking: markdown.toHTML(results.Trainer.parking),
-                        transponder: markdown.toHTML(results.Trainer.transponder),
-                        departure: markdown.toHTML(results.Trainer.departure),
-                        arrival: markdown.toHTML(results.Trainer.arrival),
-                        night: markdown.toHTML(results.Trainer.night),
-                        noise: markdown.toHTML(results.Trainer.noise),
-                        restrictions: markdown.toHTML(results.Trainer.restrictions),
-                        terminalAssignments: markdown.toHTML(results.Trainer.terminalAssignments),
-                        approaches: markdown.toHTML(results.Trainer.approaches),
-                        rwyPreferences: markdown.toHTML(results.Trainer.rwyPreferences),
-                    },
+                    trainer: trainerList,
 
                     config: config
                 });
