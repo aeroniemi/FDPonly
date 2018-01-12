@@ -1,66 +1,70 @@
+/* 
+Routing script for airport pages
+2017; last clean 2018 01 12
+*/
+//Modules from NPM
 var express = require('express');
-var router = express.Router();
 
-// Require controller modules
+//Local Modules
 var airport_controller = require('../controllers/airportController');
 var runway_controller = require('../controllers/runwayController');
 
-/// airport ROUTES ///
+//Routing controllers
+var router = express.Router();
 
-/* GET catalog home page. */
+/*
+Document routes
+*/
+//GET home
 router.get('/', airport_controller.index);
 
-/* GET request for creating a airport. NOTE This must come before routes that display airport (uses id) */
+//GET create airport
 router.get('/create', airport_controller.airport_create_get);
-
-/* POST request for creating airport. */
+//PST create airport
 router.post('/create', airport_controller.airport_create_post);
-/* GET request for list of all airport items. */
+
+//GET list airport
 router.get('/airportList', airport_controller.airport_list);
-
-/* GET request for list of all runway items. out of line due to issues */
+//GET list runway
 router.get('/runwayList', runway_controller.runway_list);
-
-/* GET request to delete airport. */
+/* NI
+//GET delete airport
 router.get('/:id/delete', airport_controller.airport_delete_get);
-
-// POST request to delete airport
+//PST delete airport
 router.post('/:id/delete', airport_controller.airport_delete_post);
-
-/* GET request to update airport. */
+*/
+/* NI
+//GET update airport
 router.get('/:id/update', airport_controller.airport_update_get);
-
-// POST request to update airport
+//PST update airport
 router.post('/:id/update', airport_controller.airport_update_post);
-
-/* GET request for one airport. */
+*/
+//GET detail airport page
 router.get('/:id', airport_controller.airport_detail);
-
 
 /// runway ROUTES ///
 
-/* GET request for creating runway. NOTE This must come before route for id (i.e. display runway) */
+//GET create runway
 router.get('/runway/create', runway_controller.runway_create_get);
-
-/* POST request for creating runway. */
+//PST create runway
 router.post('/runway/create', runway_controller.runway_create_post);
 
-/* GET request to delete runway. */
+/* NI
+//GET delete runway
 router.get('/runway/:id/delete', runway_controller.runway_delete_get);
-
-// POST request to delete runway
+//PST delete runway
 router.post('/runway/:id/delete', runway_controller.runway_delete_post);
+*/
 
-/* GET request to update runway. */
+/* NI
+//GET update runway
 router.get('/runway/:id/update', runway_controller.runway_update_get);
-
-// POST request to update runway
+//PST update runway
 router.post('/runway/:id/update', runway_controller.runway_update_post);
+*/
 
-/* GET request for one runway. */
+//GET detail runway page
 router.get('/runway/:id', runway_controller.runway_detail);
 
-/* GET request for list of all runways. */
-router.get('/runways', runway_controller.runway_list);
-
+//Express export routes
 module.exports = router;
