@@ -12,6 +12,8 @@ var metarFetcher = new MetarFetcher();
 var tafFetcher = new TafFetcher();
 var terminalProcedures = require('terminal-procedures')
 var config = require('../config');
+const util = require('util');
+
 exports.index = function (req, res) {
 
     async.parallel({
@@ -116,15 +118,15 @@ exports.airport_detail = function (req, res, next) {
                 });
 
             } else {
-                // console.log(results.charts)
-                //console.log(config)
-                console.log("so we're getting there")
-                
+
                 let trainerList = {};
                 Object.keys(results.Trainer).forEach((key) => {
                     if (results.Trainer[key] != "false") {
-                    	trainerList[key] = markdown.toHTML(results.Trainer[key])
-					}
+                        //console.log("this is is")
+                        //console.log(util.inspect(results.Trainer[key]))
+                        trainerList[key] = markdown.toHTML(util.inspect(results.Trainer[key]))
+                        console.log(trainerList[key])
+                    }
                 });
                 // Successful, so render
                 res.render('airport_detailZX', {
