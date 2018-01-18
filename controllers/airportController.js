@@ -4,7 +4,8 @@ var Trainer = require('../models/atcoTrainerAct');
 const { body, validationResult } = require('express-validator/check');
 const { sanitizeBody } = require('express-validator/filter');
 var async = require('async');
-var markdown = require('markdown').markdown;
+var MarkdownIt = require('markdown-it'),
+    markdown = new MarkdownIt();
 var MetarFetcher = require('metar-taf').MetarFetcher;
 var TafFetcher = require('metar-taf').TafFetcher;
 var notamFetcher = require('notams');
@@ -96,6 +97,7 @@ exports.airport_detail = function (req, res, next) {
         },
         Trainer: function (callback) {
             Trainer.findOne({ 'icao': icao })
+                .lean()
                 .exec(callback);
         },
 
@@ -124,7 +126,7 @@ exports.airport_detail = function (req, res, next) {
                     if (results.Trainer[key] != "false") {
                         //console.log("this is is")
                         //console.log(util.inspect(results.Trainer[key]))
-                        trainerList[key] = markdown.toHTML(util.inspect(results.Trainer[key]))
+                        trainerList[key] = markdown.render(trainerList[key].toString())
                         console.log(trainerList[key])
                     }
                 });
