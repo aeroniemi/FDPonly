@@ -8,7 +8,8 @@ var express = require('express');
 //Local Modules
 var airport_controller = require('../controllers/airportController');
 var runway_controller = require('../controllers/runwayController');
-
+var config = require('../config.js');
+var localConfig = require('../localConfig.js');
 //Routing controllers
 var router = express.Router();
 
@@ -17,12 +18,12 @@ Document routes
 */
 //GET home
 router.get('/', airport_controller.index);
-
-//GET create airport
-router.get('/create', airport_controller.airport_create_get);
-//PST create airport
-router.post('/create', airport_controller.airport_create_post);
-
+if (config.form == true) {
+    //GET create airport
+    router.get('/create', airport_controller.airport_create_get);
+    //PST create airport
+    router.post('/create', airport_controller.airport_create_post);
+}
 //GET list airport
 router.get('/airportList', airport_controller.airport_list);
 //GET list runway
@@ -43,12 +44,12 @@ router.post('/:id/update', airport_controller.airport_update_post);
 router.get('/:id', airport_controller.airport_detail);
 
 /// runway ROUTES ///
-
-//GET create runway
-router.get('/runway/create', runway_controller.runway_create_get);
-//PST create runway
-router.post('/runway/create', runway_controller.runway_create_post);
-
+if (config.form == true) {
+    //GET create runway
+    router.get('/runway/create', runway_controller.runway_create_get);
+    //PST create runway
+    router.post('/runway/create', runway_controller.runway_create_post);
+}
 /* NI
 //GET delete runway
 router.get('/runway/:id/delete', runway_controller.runway_delete_get);

@@ -1,3 +1,4 @@
+ {{#if weather.metar}}
 <h3>METAR</h3>
 {{#if beginner}}
 <p>This METAR is a weather report from {{airport.name}}. They are generally made every 30 mins at larger fields, and 1h at smaller
@@ -7,6 +8,7 @@
 <p>
     <code>{{ weather.metar }}</code>
 </p>
+{{/if}} {{#if weather.taf}}
 <h3>TAF</h3>
 {{#if beginner}}
 <p>This TAFis a weather report from {{airport.name}}. They are generally made every 30 mins at larger fields, and 1h at smaller
@@ -16,14 +18,13 @@
 <p>
     <code>{{ weather.taf }}</code>
 </p>
-
-
+{{/if}} {{#if weather.notams}}
 <h3>NOTAMs</h3>
 {{#if beginner}}
 <p>This notam is a weather report from {{airport.name}}. They are generally made every 30 mins at larger fields, and 1h at smaller
     fields.
 </p>
-{{/if}} {{#if weather.notams}}
+{{/if}}
 <table class="table" class="display" id="basicInfo">
     {{#each weather.notams}}
     <tr>
@@ -33,8 +34,4 @@
     </tr>
     {{/each}}
 </table>
-{{else}}
-<p>
-    <code>no notams found</code>
-</p>
 {{/if}}

@@ -17,6 +17,7 @@
                 </div>
             </div>
         </div>
+        {{#if config.chartsActive}}
         <div class="card">
             <div class="card-header" role="tab" id="charts">
                 <h5 class="mb-0">
@@ -32,6 +33,7 @@
                 </div>
             </div>
         </div>
+        {{/if}} {{#if config.atcoTrainerActive}} {{#if trainer}}
         <div class="card">
             <div class="card-header" role="tab" id="atcoTrainer">
                 <h5 class="mb-0">
@@ -40,12 +42,14 @@
                     </a>
                 </h5>
             </div>
+
             <div id="atcoTrainerCollapse" class="collapse" role="tabpanel" aria-labelledby="atcoTrainer" data-parent="#accordion">
                 <div class="card-body">
                     {{>atcoTrainer}}
                 </div>
             </div>
         </div>
+        {{/if}} {{/if}} {{#if config.weatherActive}} {{#if weather}}
         <div class="card">
             <div class="card-header" role="tab" id="ground">
                 <h5 class="mb-0">
@@ -61,6 +65,6 @@
                 </div>
             </div>
         </div>
-
+        {{/if}}{{/if}}
     </div>
 </div>
