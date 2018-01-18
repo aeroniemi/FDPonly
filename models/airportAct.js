@@ -17,17 +17,7 @@ var AirportSchema = new Schema(
         runways: [{ type: Schema.ObjectId, ref: 'RunwayDB', required: true }],
     }
 );
-AirportSchema
-    .virtual('CityAirportname')
-    .get(function () {
-        return this.city + ' - ' + this.name;
-    });
 
-AirportSchema
-    .virtual('url')
-    .get(function () {
-        return '/airport/' + this.icao;
-    });
 
 //Export model
 module.exports = mongoose.model('AirportDB', AirportSchema);

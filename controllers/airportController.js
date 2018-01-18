@@ -1,8 +1,11 @@
 var Airport = require('../models/airportAct');
 var Runway = require('../models/runwayAct');
+var Trainer = require('../models/atcoTrainerAct');
 const { body, validationResult } = require('express-validator/check');
 const { sanitizeBody } = require('express-validator/filter');
 var async = require('async');
+var MarkdownIt = require('markdown-it'),
+    markdown = new MarkdownIt();
 var MetarFetcher = require('metar-taf').MetarFetcher;
 var TafFetcher = require('metar-taf').TafFetcher;
 var notamFetcher = require('notams');
@@ -10,6 +13,8 @@ var metarFetcher = new MetarFetcher();
 var tafFetcher = new TafFetcher();
 var terminalProcedures = require('terminal-procedures')
 var config = require('../config');
+const util = require('util');
+
 exports.index = function (req, res) {
 
     async.parallel({
@@ -33,13 +38,9 @@ exports.airport_list = function (req, res, next) {
             //Successful, so render
             res.render('airport_listZX', { airport_list: list_airports });
         });
-
 };
 // Display detail page for a specific airport
 exports.airport_detail = function (req, res, next) {
-
-
-
     var chartZone
     var icao = req.params.id.toUpperCase();
     if (
@@ -49,7 +50,6 @@ exports.airport_detail = function (req, res, next) {
         icao.substring(0, 2) == 'TJ' ||
         icao.substring(0, 2) == 'NS'
     ) { chartZone = 'US' }
-
 
     async.parallel({
         airportMS: function (callback) {
@@ -95,6 +95,11 @@ exports.airport_detail = function (req, res, next) {
             Runway.find({ 'icao': icao })
                 .exec(callback);
         },
+        Trainer: function (callback) {
+            Trainer.findOne({ 'icao': icao })
+                .lean()
+                .exec(callback);
+        },
 
     }, function (err, results) {
         if (err) { return next(err); }
@@ -103,17 +108,42 @@ exports.airport_detail = function (req, res, next) {
             err.status = 404;
             return next(err);
         } else {
-            console.log(results.charts)
-            console.log(config)
-            // Successful, so render
-            res.render('airport_detailZX', {
-                airport: results.airportMS[0], airport_runways: results.airport_runways, weather: {
-                    metar: results.metar,
-                    taf: results.taf,
-                    notams: results.notam,
-                },
-                config: config
-            });
+            if (results.Trainer == null) { // No res
+                //console.log('We have trainers')
+                res.render('airport_detailZX', {
+                    airport: results.airportMS[0], airport_runways: results.airport_runways, weather: {
+                        metar: results.metar,
+                        taf: results.taf,
+                        notams: results.notam,
+                    },
+                    config: config
+                });
+
+            } else {
+
+                let trainerList = {};
+                Object.keys(results.Trainer).forEach((key) => {
+                    if (results.Trainer[key] != "false") {
+                        //console.log("this is is")
+                        console.log(util.inspect(results.Trainer[key]))
+                        trainerList[key] = markdown.render(results.Trainer[key].toString())
+                        console.log(results.Trainer[key])
+                    }
+                });
+                // Successful, so render
+                res.render('airport_detailZX', {
+                    airport: results.airportMS[0],
+                    airport_runways: results.airport_runways,
+                    weather: {
+                        metar: results.metar,
+                        taf: results.taf,
+                        notams: results.notam,
+                    },
+                    trainer: trainerList,
+
+                    config: config
+                });
+            }
         }
     });
 
