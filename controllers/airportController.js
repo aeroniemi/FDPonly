@@ -125,9 +125,9 @@ exports.airport_detail = function (req, res, next) {
                 Object.keys(results.Trainer).forEach((key) => {
                     if (results.Trainer[key] != "false") {
                         //console.log("this is is")
-                        //console.log(util.inspect(results.Trainer[key]))
-                        trainerList[key] = markdown.render(trainerList[key].toString())
-                        console.log(trainerList[key])
+                        console.log(util.inspect(results.Trainer[key]))
+                        trainerList[key] = markdown.render(results.Trainer[key].toString())
+                        console.log(results.Trainer[key])
                     }
                 });
                 // Successful, so render
