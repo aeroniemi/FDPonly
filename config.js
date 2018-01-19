@@ -12,5 +12,18 @@ module.exports = {
     //Weather (default true)
     weatherActive: true,
     //US Charts from FAA (default false)
-    chartsActive: false
+    chartsActive: false,
+
+    //Branding data
+    branding: {
+        //Web title (raw text)
+        title: 'For Documentation Purposes Only',
+        //Website title (HTML formatted)
+        titleRich: 'For <strong>documentation</strong> purposes only',
+    },
+    indexZ: {
+        TopTitleRich: 'For <strong>documentation</strong> purposes only',
+        TopSubTitleRich: 'Here we go with more data and stuff and more stuff and im bored writing (help!)',
+
+    }
 };
