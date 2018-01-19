@@ -25,9 +25,9 @@ if (config.form == true) {
     router.post('/create', airport_controller.airport_create_post);
 }
 //GET list airport
-router.get('/airportList', airport_controller.airport_list);
+router.get('/airportList', airport_controller.airport_list, { maxAge: 1000 * 60 * 60 });
 //GET list runway
-router.get('/runwayList', runway_controller.runway_list);
+router.get('/runwayList', runway_controller.runway_list, { maxAge: 1000 * 60 * 60 });
 /* NI
 //GET delete airport
 router.get('/:id/delete', airport_controller.airport_delete_get);
@@ -41,7 +41,7 @@ router.get('/:id/update', airport_controller.airport_update_get);
 router.post('/:id/update', airport_controller.airport_update_post);
 */
 //GET detail airport page
-router.get('/:id', airport_controller.airport_detail);
+router.get('/:id', airport_controller.airport_detail, { maxAge: 1000 * 60 * 15 });
 
 /// runway ROUTES ///
 if (config.form == true) {
@@ -65,7 +65,7 @@ router.post('/runway/:id/update', runway_controller.runway_update_post);
 */
 
 //GET detail runway page
-router.get('/runway/:id', runway_controller.runway_detail);
+router.get('/runway/:id', runway_controller.runway_detail, { maxAge: 1000 * 60 * 15 });
 
 //Express export routes
 module.exports = router;

@@ -61,7 +61,8 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
 //Express routing config
-app.use(express.static('./static'));
+var oneYear = 31557600000;
+app.use(express.static('./static', { maxAge: oneYear }));
 app.use('/', index);
 app.use('/airports', catalog);
 

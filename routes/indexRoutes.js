@@ -1,7 +1,7 @@
 var express = require('express');
 var router = express.Router();
 
-router.get('/', function (req, res, next) {
+router.get('/', { maxAge: 1000 * 60 * 60 * 24 }, function (req, res, next) {
     res.render('indexZX');
 });
 /*
