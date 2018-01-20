@@ -39,7 +39,7 @@ exports.airport_list = function (req, res, next) {
             if (err) { return next(err); }
             //Successful, so render
             res.set('Cache-Control', 'max-age=1000');
-            res.render('airport_listZX', { airport_list: list_airports });
+            res.render('airport_listZX', { airport_list: list_airports, config: config });
         });
 };
 // Display detail page for a specific airport
