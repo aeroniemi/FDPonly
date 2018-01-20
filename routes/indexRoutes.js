@@ -2,7 +2,7 @@ var express = require('express');
 var router = express.Router();
 
 router.get('/', function (req, res, next) {
-    res.render('indexZX');
+    res.render('indexZX', { config: config });
 });
 /*
 router.get('/:icao', function (req, res, next) {

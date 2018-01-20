@@ -13,7 +13,7 @@ exports.runway_list = function (req, res, next) {
         .exec(function (err, list_runways) {
             if (err) { return next(err); }
             //Successful, so render
-            res.render('runway_listZX', { runway_list: list_runways });
+            res.render('runway_listZX', { runway_list: list_runways, config: config });
         });
 
 };
@@ -25,7 +25,7 @@ exports.runway_detail = function (req, res) {
 if (config.forms == true) {
     // Display runway create form on GET
     exports.runway_create_get = function (req, res, next) {
-        res.render('runway_formZX', { title: 'Create Runway' });
+        res.render('runway_formZX', { config: config });
     };
 
     // Handle runway create on POST
