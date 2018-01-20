@@ -32,7 +32,7 @@ mongoose.connect(mongoDB, {
 mongoose.Promise = global.Promise;
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'MongoDB connection error:'));
-
+app.enable('view cache');
 //Express minification setup
 app.use(minifyHTML({
 	override: true,
