@@ -38,6 +38,7 @@ exports.airport_list = function (req, res, next) {
         .exec(function (err, list_airports) {
             if (err) { return next(err); }
             //Successful, so render
+            res.set('Cache-Control', 'max-age=1000');
             res.render('airport_listZX', { airport_list: list_airports });
         });
 };
