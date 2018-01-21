@@ -5,6 +5,7 @@ var Schema = mongoose.Schema;
 var AirportSchema = new Schema(
     {
         icao: { type: String, required: true, max: 4 },
+        fir: { type: String, required: true, max: 8 },
         type: { type: 'decimal', required: true, max: 1 },
         ele: { type: 'decimal', required: true, max: 15000 },
         variation: { type: 'decimal' },
