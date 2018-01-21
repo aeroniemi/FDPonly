@@ -19,6 +19,7 @@ var localConfig = require('./localConfig.js');
 //Routing controllers
 var index = require('./routes/indexRoutes');
 var catalog = require('./routes/catalogRoutes');
+var dash = require('./routes/dashRoutes');
 
 //Express app setup
 var app = express();
@@ -32,7 +33,7 @@ mongoose.connect(mongoDB, {
 mongoose.Promise = global.Promise;
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'MongoDB connection error:'));
-app.enable('view cache');
+//app.enable('view cache');
 //Express minification setup
 app.use(minifyHTML({
 	override: true,
@@ -62,8 +63,10 @@ app.use(bodyParser.json());
 
 //Express routing config
 app.use(express.static('./static', { maxAge: 31557600000 }));
-app.use('/', index);
+
 app.use('/airports', catalog);
+app.use('/dashboard', dash);
+app.use('/', index);
 
 //Express 404 config
 app.use(function (req, res, next) {
@@ -71,7 +74,7 @@ app.use(function (req, res, next) {
 	err.status = 404;
 	next(err);
 });
-
+/*
 //Express error config
 app.use(function (err, req, res, next) {
 	res.locals.message = err.message;
@@ -79,6 +82,6 @@ app.use(function (err, req, res, next) {
 	res.status(err.status || 500);
 	res.render('error');
 });
-
+*/
 //Express listener startup
 app.listen(config.port);

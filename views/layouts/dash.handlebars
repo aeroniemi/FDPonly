@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href=""> {{>analytics}}
+    <title>Secret Zone - {{config.branding.title}}</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb"
+        crossorigin="anonymous">
+    <link href="../../dashboard.css" rel="stylesheet">
+</head>
+
+<body>
+    {{>navDash}}
+
+    <div class="container-fluid">
+        <div class="row">
+            <nav class="col-md-2 d-none d-md-block bg-light sidebar">
+                <div class="sidebar-sticky">
+                    <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
+                        <span>Suggest changes to airport data</span>
+                        <a class="d-flex align-items-center text-muted" href="#">
+                        </a>
+                    </h6>
+                    <ul class="nav flex-column mb-2">
+                        {{#each user.localDivision}}
+                        <li class="nav-item">
+                            <a class="nav-link" href="/division/{{this.firUrl}}/editData">
+                                {{this.firCode}} - {{this.firName}}
+                            </a>
+                        </li>
+                        {{/each}} {{#each user.visitingDivision}}
+                        <li class="nav-item">
+                            <a class="nav-link" href="/division/{{this.firUrl}}/editData">
+                                {{this.firCode}} - {{this.firName}}
+                            </a>
+                        </li>
+                        {{/each}}
+                        <!--<li class="nav-item">
+                            <button class="btn btn-success disabled" type="button">
+                                <a class="nav-link" href="/division/requestEdit">
+                                    Request edit for other division
+                                </a>
+                            </button>
+
+                        </li>
+                        -->
+                    </ul>
+                </div>
+            </nav>
+
+            <main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
+                {{{body}}}
+            </main>
+            <script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n"
+                crossorigin="anonymous"></script>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh"
+                crossorigin="anonymous"></script>
+            <script type="text/javascript" src="https://cdn.datatables.net/v/bs4/dt-1.10.16/b-1.5.0/b-colvis-1.5.0/fc-3.2.4/fh-3.1.3/rg-1.0.2/datatables.min.js"></script>
+            <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ"
+                crossorigin="anonymous"></script>
+
+</html>
