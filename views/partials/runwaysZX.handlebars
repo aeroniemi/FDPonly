@@ -1,4 +1,5 @@
 <h3>Runways</h3>
+{{#if airport_runways[0].name1}}
 <table class="table" class="display" id="example">
     <tr>
         <th>runway</th>
@@ -21,3 +22,8 @@
     </tr>
     {{/each}}
 </table>
+{{else}}
+<h3>
+    <strong>This airport has no runways, helipads or sealanes. Therefore, it's not an airport. Please check this isn't a train station</strong>
+</h3>
+{{/if}}

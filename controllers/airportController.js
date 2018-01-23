@@ -27,7 +27,7 @@ exports.index = function (req, res) {
             Airport.count(callback);
         },
     }, function (err, results) {
-        res.render('homeZX', { error: err, data: results });
+        res.render('homeZX', { config: config });
     });
 };
 // Display list of all airports
