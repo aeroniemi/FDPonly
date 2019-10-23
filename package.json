@@ -20,7 +20,7 @@
     "markdown": "^0.5.0",
     "markdown-it": "^8.4.0",
     "metar-taf": "0.0.2",
-    "mongoose": "^4.13.8",
+    "mongoose": "^5.7.5",
     "morgan": "^1.9.0",
     "nedb": "^1.8.0",
     "notams": "^1.1.8",
